@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Comedian {
+  id                 String   @id @default(cuid())
+  fullName           String
+  stageName          String?
+  email              String?
+  phone              String?
+  homeAirport        String?
+  travelPreferences  String?
+  hotelPreferences   String?
+  paymentPreferences String?
+  internalNotes      String?
+  active             Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  gigs               Gig[]
+  uploads            Upload[]
+}
+
+model Gig {
+  id                     String         @id @default(cuid())
+  comedianId             String
+  comedian               Comedian       @relation(fields: [comedianId], references: [id])
+  title                  String
+  city                   String?
+  state                  String?
+  venueName              String?
+  venueAddress           String?
+  venuePhone             String?
+  venueWebsite           String?
+  eventType              String?
+  startDate              DateTime?
+  endDate                DateTime?
+  multiDayRun            Boolean        @default(false)
+  status                 String         @default("draft")
+  supportAct             String?
+  setLength              String?
+  travelType             String?
+  travelNotes            String?
+  airport                String?
+  airportPickupType      String?
+  airportPickupDetails   String?
+  travelBuyout           Float?
+  arrivalDate            DateTime?
+  departureDate          DateTime?
+  hotelProvided          Boolean        @default(false)
+  hotelName              String?
+  hotelAddress           String?
+  hotelPhone             String?
+  reservationName        String?
+  hotelConfirmationNums  String?
+  hotelCheckin           DateTime?
+  hotelCheckout          DateTime?
+  hotelNotes             String?
+  guarantee              Float?
+  bonusTerms             String?
+  backendTerms           String?
+  walkoutPotential       Float?
+  paymentMethod          String?
+  depositAmount          Float?
+  balanceDue             Float?
+  paymentNotes           String?
+  parkingInstructions    String?
+  arrivalInstructions    String?
+  internalNotes          String?
+  comedianNotes          String?
+  rawSourceText          String?
+  sourceType             String?
+  sourceFileName         String?
+  importConfidence       Float?
+  requiresReview         Boolean        @default(false)
+  importGroupKey         String?
+  isPersonalDate         Boolean        @default(false)
+  onesheetSent           Boolean        @default(false)
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  showtimes              GigShowtime[]
+  contacts               GigContact[]
+  checklistItems         GigChecklist[]
+  oneSheets              OneSheet[]
+  uploads                Upload[]
+}
+
+model GigShowtime {
+  id          String    @id @default(cuid())
+  gigId       String
+  gig         Gig       @relation(fields: [gigId], references: [id])
+  showDate    DateTime?
+  showTime    String?
+  doorsTime   String?
+  arrivalTime String?
+  notes       String?
+}
+
+model GigContact {
+  id        String  @id @default(cuid())
+  gigId     String
+  gig       Gig     @relation(fields: [gigId], references: [id])
+  name      String
+  role      String?
+  company   String?
+  phone     String?
+  mobile    String?
+  email     String?
+  isPrimary Boolean @default(false)
+  notes     String?
+}
+
+model GigChecklist {
+  id        String   @id @default(cuid())
+  gigId     String
+  gig       Gig      @relation(fields: [gigId], references: [id])
+  itemKey   String
+  itemLabel String
+  status    String   @default("not_started")
+  notes     String?
+  updatedAt DateTime @updatedAt
+}
+
+model Upload {
+  id               String    @id @default(cuid())
+  comedianId       String?
+  comedian         Comedian? @relation(fields: [comedianId], references: [id])
+  gigId            String?
+  gig              Gig?      @relation(fields: [gigId], references: [id])
+  fileName         String
+  fileType         String?
+  fileUrl          String?
+  sourceType       String?
+  rawTextExtracted String?
+  createdAt        DateTime  @default(now())
+}
+
+model OneSheet {
+  id            String   @id @default(cuid())
+  gigId         String
+  gig           Gig      @relation(fields: [gigId], references: [id])
+  versionType   String   @default("comedian")
+  generatedHtml String?
+  generatedText String?
+  pdfUrl        String?
+  createdAt     DateTime @default(now())
+}

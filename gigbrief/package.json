@@ -1,0 +1,25 @@
+{
+  "name": "gigbrief",
+  "version": "1.0.0",
+  "description": "Comedy talent manager operations dashboard",
+  "type": "module",
+  "scripts": {
+    "dev:server": "node server/index.js",
+    "dev:client": "cd client && npm run dev",
+    "dev": "npm run dev:server & npm run dev:client",
+    "db:generate": "npx prisma generate",
+    "db:push": "npx prisma db push",
+    "db:seed": "node prisma/seed.js",
+    "db:reset": "npx prisma db push --force-reset && node prisma/seed.js",
+    "build": "cd client && npm run build"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.78.0",
+    "@prisma/client": "^5.22.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "multer": "^2.1.1",
+    "prisma": "^5.22.0"
+  }
+}

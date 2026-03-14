@@ -92,10 +92,10 @@ export class LiveAudioPanel extends Panel {
           <div class="scanner-status" id="scannerStatus"></div>
           ${this.scannerPlaying
             ? this.getBroadcastifyEmbed(scanner)
-            : `<a class="scanner-external-link" href="https://www.broadcastify.com/listen/feed/${scanner.feedId}"
-                 target="_blank" rel="noopener">
-                Open ${scanner.name} on Broadcastify ↗
-              </a>`
+            : `<div class="embed-placeholder">
+                 <span class="placeholder-icon">📡</span>
+                 <span>Press play to listen to ${scanner.name}</span>
+               </div>`
           }
           <div class="scanner-visualizer ${this.scannerPlaying ? 'active' : ''}" id="scannerViz">
             ${Array.from({ length: 24 }, () => '<div class="viz-bar"></div>').join('')}
@@ -161,6 +161,7 @@ export class LiveAudioPanel extends Panel {
     return `<iframe
       id="scannerEmbed"
       width="100%" height="150" frameborder="0" scrolling="no" allow="autoplay"
+      sandbox="allow-scripts allow-same-origin allow-forms"
       src="https://www.broadcastify.com/listen/feed/${scanner.feedId}/web"
       style="border:none; border-radius: 8px; background: #111;"
     ></iframe>`;
@@ -171,6 +172,7 @@ export class LiveAudioPanel extends Panel {
     return `<iframe
       id="scPlayer"
       width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
       src="https://w.soundcloud.com/player/?url=${encodeURIComponent(track.url)}&color=%23ff5500&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false&visual=true"
     ></iframe>`;
   }

@@ -1,0 +1,9 @@
+{
+  "name": "GenX Comedy",
+  "niche": "Gen X comedian — relatable humor about the pain points of being 50-something",
+  "searchTerms": ["genxhumor", "genxcomedy", "over40comedy", "midlifehumor", "genxproblems"],
+  "competitors": [],
+  "browserPort": 9222,
+  "maxPostsPerSearch": 50,
+  "maxCompetitorPosts": 10
+}
